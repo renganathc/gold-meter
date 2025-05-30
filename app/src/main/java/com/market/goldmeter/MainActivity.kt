@@ -3,7 +3,6 @@ package com.market.goldmeter
 import android.content.Intent
 import android.graphics.Color
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,18 +14,26 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
+import androidx.lifecycle.lifecycleScope
+import com.market.goldmeter.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar?.hide()
 
@@ -52,19 +59,19 @@ class MainActivity : AppCompatActivity() {
                             if (snapshot.value.toString() == "1") {
 
                                 var m = MediaPlayer.create(this@MainActivity, R.raw.welcome2)
-                                m.setVolume(0.05F, 0.05F)
+                                m.setVolume(0.12F, 0.12F)
                                 m.start()
 
                             } else if (snapshot.value.toString() == "2") {
 
                                 var m = MediaPlayer.create(this@MainActivity, R.raw.nostalgia)
-                                m.setVolume(0.01F, 0.01F)
+                                m.setVolume(0.035F, 0.035F)
                                 m.start()
 
                             } else if (snapshot.value.toString() == "3") {
 
                                 var m = MediaPlayer.create(this@MainActivity, R.raw.nokia)
-                                m.setVolume(0.015F, 0.015F)
+                                m.setVolume(0.03F, 0.03F)
                                 m.start()
 
                             } else if (snapshot.value.toString() == "0") {
@@ -76,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         else if(snapshot.key == "Click"){
-                            clickSound == snapshot.value
+                            clickSound = snapshot.value.toString()
                         }
                     }
 
@@ -109,14 +116,14 @@ class MainActivity : AppCompatActivity() {
         val c = Calendar.getInstance().time
         val df = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
         val formattedDate: String = df.format(c)
-        date.text = formattedDate
+        binding.date.text = formattedDate
 
         var time = SimpleDateFormat("HH", Locale.getDefault())
         var formattedTime = time.format(c).toInt()
 
-        if (formattedTime > 1 && formattedTime < 11) greeting.text = "Good Morning \uD83D\uDC4B\uD83D\uDE4F"
-        else if (formattedTime > 11 && formattedTime < 16) greeting.text = "Good Afternoon \uD83D\uDC4B\uD83D\uDE4F"
-        else greeting.text = "Good Evening \uD83D\uDC4B\uD83D\uDE4F"
+        if (formattedTime > 1 && formattedTime < 11) binding.greeting.text = "Good Morning \uD83D\uDC4B"
+        else if (formattedTime > 11 && formattedTime < 16) binding.greeting.text = "Good Afternoon \uD83D\uDC4B"
+        else binding.greeting.text = "Good Evening \uD83D\uDC4B"
 
         var num = LocalDate.now().dayOfWeek.toString()
 
@@ -130,182 +137,142 @@ class MainActivity : AppCompatActivity() {
             "SATURDAY" -> num = "Saturday"
         }
 
-        day.text = num
+        binding.day.text = num
 
 
-        Thread(
-            Runnable {
-                try {
-                    val doc = Jsoup.connect("https://www.livechennai.com/gold_silverrate.asp").get()
-                    val element = doc.select("tr:nth-of-type(1) > td:nth-of-type(4)")
+        // GOLD 22k
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val doc = Jsoup.connect("https://www.livechennai.com/gold_silverrate.asp").get()
+                val element = doc.select("tr:nth-of-type(1) > td:nth-of-type(4)")
+                val manipulatedElement = element.text().filter { it.isDigit() }
+                val final1 = manipulatedElement.toFloat()
+                val final8 = final1 * 8
 
-                    val manipulatedElement = element.text().toString().filter{ it.isDigit() }
-
-                    var final1 =  manipulatedElement.toFloat()
-                    var final8 = final1*8
-
-                    runOnUiThread {
-                        g221.text = "₹ " + final1.toString() + "0"
-                        g228.text = "₹ " + final8.toString() + "0"
-                    }
-                } catch (e : IOException) {
-
+                withContext(Dispatchers.Main) {
+                    binding.g221.text = "₹ ${final1}0"
+                    binding.g228.text = "₹ ${final8}0"
                 }
-            }
-        ).start()
+            } catch (_: IOException) {}
+        }
 
+// USD TO INR
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val doc = Jsoup.connect("https://www.xe.com/currencyconverter/convert/?Amount=1&From=USD&To=INR").get()
+                val element = doc.getElementsByClass("sc-708e65be-1 chuBHG")
 
-        Thread(
-            Runnable {
-                try {
-                    val doc = Jsoup.connect("https://www.google.com/search?q=usd+to+inr&rlz=1C5CHFA_enIN1052IN1052&oq=usd+to+inr&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MgYIARBFGEAyBggCEEUYPDIGCAMQRRg8MgYIBBBFGDzSAQgxMzUxajBqN6gCALACAA&sourceid=chrome&ie=UTF-8").get()
-                    val element = doc.select(".DFlfde.SwHCTb")
-                    val element2 = doc.select(".hqAUc.k0Rg6d > span")
-
-
-                    runOnUiThread {
-                        dollar1.text = "₹ " + element.text().toString()
-                        last_update.text = element2.text().toString()
-                    }
-                } catch (e : IOException) {
-
+                withContext(Dispatchers.Main) {
+                    binding.dollar1.text = "₹ ${element.text().substring(0,5)}"
+                    binding.lastUpdate.text = "Last Updated : $formattedDate"
                 }
-            }
-        ).start()
+            } catch (_: IOException) {}
+        }
 
-        Thread(
-            Runnable {
-                try {
-                    val doc = Jsoup.connect("https://www.livechennai.com/gold_silverrate.asp").get()
-                    val element = doc.select(".silver-rates.table.table-bordered.table-striped > tbody > tr:nth-of-type(1) > td:nth-of-type(2)")
+// SILVER
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val doc = Jsoup.connect("https://www.livechennai.com/gold_silverrate.asp").get()
+                val element = doc.select(".silver-rates.table.table-bordered.table-striped > tbody > tr:nth-of-type(1) > td:nth-of-type(2)")
+                val final1 = element.text().toFloat()
+                val final8 = final1 * 1000
 
-                    var final1 = element.text().toString().toFloat()
-                    var final8 = final1*1000
-
-                    runOnUiThread {
-                        s1.text = "₹ " + final1.toString() + "0"
-                        s8.text = "₹ " + final8.toString() + "0"
-                    }
-
-                } catch (e : IOException) {
-
+                withContext(Dispatchers.Main) {
+                    binding.s1.text = "₹ ${final1}0"
+                    binding.s8.text = "₹ ${final8}0"
                 }
-            }
-        ).start()
+            } catch (_: IOException) {}
+        }
 
-        Thread(
-            Runnable {
-                try {
-                    val doc = Jsoup.connect("https://www.livechennai.com/18k_goldrate_chennai.asp").get()
-                    val element = doc.select("tr:nth-of-type(3) > td:nth-of-type(2) > font")
+// GOLD 18k
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val doc = Jsoup.connect("https://www.livechennai.com/18k_goldrate_chennai.asp").get()
+                val element = doc.select("tr:nth-of-type(3) > td:nth-of-type(2) > font")
+                val final1 = element.text().toFloat()
+                val final8 = final1 * 8
 
-                    var final1 = element.text().toString().toFloat()
-                    var final8 = final1*8
-
-                    runOnUiThread {
-                        gold18.text = "₹ " + final1.toString() + "0"
-                        gold18_p.text = "₹ " + final8.toString()  + "0"
-                    }
-                } catch (e : IOException) {
-
+                withContext(Dispatchers.Main) {
+                    binding.gold18.text = "₹ ${final1}0"
+                    binding.gold18P.text = "₹ ${final8}0"
                 }
-            }
-        ).start()
+            } catch (_: IOException) {}
+        }
 
-        Thread(
-            Runnable {
-                try {
-                    val doc = Jsoup.connect("https://www.livechennai.com/platinum_rate_chennai.asp").get()
-                    val element = doc.select("tr:nth-of-type(2) > td:nth-of-type(2)")
+// PLATINUM
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val doc = Jsoup.connect("https://www.livechennai.com/platinum_rate_chennai.asp").get()
+                val element = doc.select("tr:nth-of-type(2) > td:nth-of-type(2)")
+                val final1 = element[0].text().toFloat()
+                val final8 = final1 * 8
 
-                    var final1 = element[0].text().toString().toFloat()
-                    var final8 = final1*8
-
-                    runOnUiThread {
-                        p1.text = "₹ " + final1.toString() + "0"
-                        p8.text = "₹ " + final8.toString() + "0"
-                    }
-                } catch (e : IOException) {
-
+                withContext(Dispatchers.Main) {
+                    binding.p1.text = "₹ ${final1}0"
+                    binding.p8.text = "₹ ${final8}0"
                 }
-            }
-        ).start()
+            } catch (_: IOException) {}
+        }
 
-        Thread(
-            Runnable {
-                try {
-                    val doc = Jsoup.connect("https://www.livechennai.com/petrol_price.asp").get()
-                    val element = doc.select(".gold-rates.table.table-bordered > tbody:nth-of-type(1) > tr > td:nth-of-type(2)")
+// PETROL
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val doc = Jsoup.connect("https://www.livechennai.com/petrol_price.asp").get()
+                val element = doc.select(".gold-rates.table.table-bordered > tbody:nth-of-type(1) > tr > td:nth-of-type(2)")
+                val final1 = element[0].text().toDouble()
+                val final8 = final1 * 3
 
-                    var final1 = element[0].text().toString().toDouble()
-                    var final8 = final1*3
-
-                    runOnUiThread {
-                        petrol.text = "₹ " + final1.toString()
-                        petrolG.text = "₹ " + final8.toString()
-                    }
-                } catch (e : IOException) {
-
+                withContext(Dispatchers.Main) {
+                    binding.petrol.text = "₹ $final1"
+                    binding.petrolG.text = "₹ $final8"
                 }
-            }
-        ).start()
+            } catch (_: IOException) {}
+        }
 
-        Thread(
-            Runnable {
-                try {
-                    val doc = Jsoup.connect("https://www.livechennai.com/petrol_price.asp").get()
-                    val element = doc.select(".silver-rates.table.table-bordered > tbody:nth-of-type(1) > tr > td:nth-of-type(2)")
+// DIESEL
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val doc = Jsoup.connect("https://www.livechennai.com/petrol_price.asp").get()
+                val element = doc.select(".silver-rates.table.table-bordered > tbody:nth-of-type(1) > tr > td:nth-of-type(2)")
+                val final1 = element[0].text().toFloat()
+                val final8 = final1 * 3
 
-                    var final1 = element[0].text().toString().toFloat()
-                    var final8 = final1*3
-
-                    runOnUiThread {
-                        diesel.text = "₹ " + final1.toString()
-                        dieselG.text = "₹ " + final8.toString()
-                    }
-                } catch (e : IOException) {
-
+                withContext(Dispatchers.Main) {
+                    binding.diesel.text = "₹ $final1"
+                    binding.dieselG.text = "₹ $final8"
                 }
-            }
-        ).start()
+            } catch (_: IOException) {}
+        }
 
-        Thread(
-            Runnable {
-                try {
-                    val doc = Jsoup.connect("https://www.livechennai.com/scrap_prices_Chennai.asp").get()
-                    val element = doc.select("tr:nth-of-type(4) > td:nth-of-type(3)")
+// COPPER
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val doc = Jsoup.connect("https://www.livechennai.com/scrap_prices_Chennai.asp").get()
+                val element = doc.select("tr:nth-of-type(4) > td:nth-of-type(3)")
+                val final1 = element[0].text().toFloat()
 
-                    var final1 = element[0].text().toString().toFloat()//var final8 = doc.select("tr:nth-of-type(4) > td:nth-of-type(3)").text().toString()
-
-                    runOnUiThread {
-                        copper.text = "₹ " + (final1 + 2.5).toString() + "0"
-                        copperKG.text = "₹ " + final1.toString() + "0"
-                    }
-                } catch (e : IOException) {
-
+                withContext(Dispatchers.Main) {
+                    binding.copper.text = "₹ ${final1 + 2.5}0"
+                    binding.copperKG.text = "₹ ${final1}0"
                 }
-            }
-        ).start()
+            } catch (_: IOException) {}
+        }
 
-        Thread(Runnable {
+// GOLD 24k
+        lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val doc = Jsoup.connect("https://www.livechennai.com/gold_silverrate.asp").get()
                 val element = doc.select(".gold-rates.table.table-bordered.table-striped > tbody > tr:nth-of-type(1) > td:nth-of-type(2)")
+                val manipulatedElement = element.text().filter { it.isDigit() }
+                val final1 = manipulatedElement.toFloat()
+                val final8 = final1 * 8
 
-                val manipulatedElement = element.text().toString().filter { it.isDigit() }
-
-
-                var final1 =  manipulatedElement.toFloat()
-                var final8 = final1*8
-
-                runOnUiThread {
-                    g241.text = "₹ " + final1.toString() + "0"
-                    g248.text = "₹ " + final8.toString() + "0"
+                withContext(Dispatchers.Main) {
+                    binding.g241.text = "₹ ${final1}0"
+                    binding.g248.text = "₹ ${final8}0"
                 }
-            } catch (e : IOException) {
-
-            }
-        }).start()
+            } catch (_: IOException) {}
+        }
 
 
 
@@ -314,7 +281,7 @@ class MainActivity : AppCompatActivity() {
         var mp = MediaPlayer.create(this, R.raw.click)
         mp.setVolume(0.04F, 0.04F)
 
-        gold22Card.setOnClickListener {
+        binding.gold22Card.setOnClickListener {
             if (clickSound == "1") {
                 mp.start()
             }
@@ -324,7 +291,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        gold24Card.setOnClickListener {
+        binding.gold24Card.setOnClickListener {
             if (clickSound == "1") {
                 mp.start()
             }
@@ -333,7 +300,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(intent))
         }
 
-        silverCard.setOnClickListener {
+        binding.silverCard.setOnClickListener {
             if (clickSound == "1") {
                 mp.start()
             }
@@ -342,7 +309,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(intent))
         }
 
-        platinumCard.setOnClickListener {
+        binding.platinumCard.setOnClickListener {
             Snackbar.make(findViewById(R.id.tex), "Platinum Price History is Unavailable at the moment", Snackbar.LENGTH_LONG).show()
 
             //mp.start()
@@ -350,7 +317,7 @@ class MainActivity : AppCompatActivity() {
             //startActivity(Intent(intent))
         }
 
-        gold18Card.setOnClickListener {
+        binding.gold18Card.setOnClickListener {
             if (clickSound == "1") {
                 mp.start()
             }
@@ -360,7 +327,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        usdCard.setOnClickListener {
+        binding.usdCard.setOnClickListener {
             if (clickSound == "1") {
                 mp.start()
             }
@@ -369,7 +336,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(intent))
         }
 
-        copperCard.setOnClickListener {
+        binding.copperCard.setOnClickListener {
             Snackbar.make(findViewById(R.id.tex), "Copper Price History is Unavailable at the moment", Snackbar.LENGTH_LONG).show()
 
             //mp.start()
@@ -377,7 +344,7 @@ class MainActivity : AppCompatActivity() {
             //startActivity(Intent(intent))
         }
 
-        petrolCard.setOnClickListener {
+        binding.petrolCard.setOnClickListener {
             Snackbar.make(findViewById(R.id.tex), "Fuel Price History is Unavailable at the moment", Snackbar.LENGTH_LONG).show()
 
             //mp.start()
@@ -385,7 +352,7 @@ class MainActivity : AppCompatActivity() {
             //startActivity(Intent(intent))
         }
 
-        dieselCard.setOnClickListener {
+        binding.dieselCard.setOnClickListener {
             Snackbar.make(findViewById(R.id.tex), "Fuel Price History is Unavailable at the moment", Snackbar.LENGTH_LONG).show()
 
             //mp.start()

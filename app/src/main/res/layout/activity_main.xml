@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/product_sans_regular"
-                    android:text="Good Morning 👋🙏"
+                    android:text="Good Morning 👋"
                     android:textColor="#FFFFFF"
                     android:textSize="35dp" />
 

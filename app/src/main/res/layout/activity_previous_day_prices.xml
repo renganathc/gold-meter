@@ -462,7 +462,7 @@
                 android:fontFamily="serif-monospace"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="Chennai Meter"
+                android:text="Gold Meter"
                 android:layout_marginTop="-4dp"
                 android:textStyle="bold"
                 android:textAllCaps="true"

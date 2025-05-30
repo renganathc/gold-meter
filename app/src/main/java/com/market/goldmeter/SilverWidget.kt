@@ -4,8 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
-import kotlinx.android.synthetic.main.activity_main.s1
-import kotlinx.android.synthetic.main.activity_main.s8
 import org.jsoup.Jsoup
 import java.io.IOException
 
