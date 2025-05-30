@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "186671257721",
+    "firebase_url": "https://gold-radar-maxx-default-rtdb.firebaseio.com",
+    "project_id": "gold-radar-maxx",
+    "storage_bucket": "gold-radar-maxx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186671257721:android:3695c079829ab44ca29ca8",
+        "android_client_info": {
+          "package_name": "com.market.catalyst"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMDugO0Htz0rZakbtRMaxdT2iH4dRYOeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186671257721:android:e3bc26fd167bc093a29ca8",
+        "android_client_info": {
+          "package_name": "com.market.goldmeter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMDugO0Htz0rZakbtRMaxdT2iH4dRYOeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

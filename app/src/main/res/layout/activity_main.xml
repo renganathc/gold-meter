@@ -434,8 +434,139 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/silverCard"
+                android:id="@+id/gold18Card"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginStart="18.5dp"
+                android:layout_marginTop="18.5dp"
+                android:layout_marginEnd="18.5dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="7dp"
+                app:cardMaxElevation="20dp"
+                tools:layout_editor_absoluteY="15dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/trees" />
+
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FAC3D138">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Gold"
+                                android:textSize="36dp"
+                                android:fontFamily="@font/roboto_medium"
+                                android:textColor="#FFFFFF"
+                                android:layout_marginTop="11dp"
+                                android:layout_marginStart="21dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="[18K]"
+                                android:textSize="33dp"
+                                android:fontFamily="sans-serif-condensed-light"
+                                android:textStyle="bold"
+                                android:textColor="#FFFFFF"
+                                android:layout_marginTop="9dp"
+                                android:layout_marginStart="10dp"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_margin="10dp"
+                            android:background="#DCDCDC" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="21dp"
+                                android:text="1 Gram :"
+                                android:fontFamily="@font/roboto"
+                                android:textColor="#FFFFFF"
+                                android:textSize="27dp" />
+
+                            <TextView
+                                android:id="@+id/gold18"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="......."
+                                android:textColor="#FFFFFF"
+                                android:textSize="27dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="21dp"
+                                android:text="8 Gram :"
+                                android:fontFamily="@font/roboto"
+                                android:textColor="#FFFFFF"
+                                android:textSize="27dp" />
+
+                            <TextView
+                                android:id="@+id/gold18_p"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="......."
+                                android:textColor="#FFFFFF"
+                                android:textSize="27dp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/usdCard"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:layout_marginStart="18.5dp"
@@ -461,7 +592,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#FAC3D138">
+                    android:background="#F7FF5722">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -477,7 +608,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Silver"
+                            android:text="US Dollar"
                             android:textSize="36dp"
                             android:fontFamily="@font/roboto_medium"
                             android:textColor="#FFFFFF"
@@ -485,6 +616,117 @@
                             android:layout_marginStart="21dp"/>
 
                     </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_margin="10dp"
+                            android:background="#DCDCDC" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="21dp"
+                                android:text="1 USD :"
+                                android:fontFamily="@font/roboto"
+                                android:textColor="#FFFFFF"
+                                android:textSize="27dp" />
+
+                            <TextView
+                                android:id="@+id/dollar1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="......."
+                                android:textColor="#FFFFFF"
+                                android:textSize="27dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/last_update"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="4dp"
+                                android:layout_marginStart="17.4dp"
+                                android:text="......."
+                                android:fontFamily="@font/roboto"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold"
+                                android:textSize="21dp" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/silverCard"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginStart="18.5dp"
+                android:layout_marginTop="18.5dp"
+                android:layout_marginEnd="18.5dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="7dp"
+                app:cardMaxElevation="20dp"
+                tools:layout_editor_absoluteY="15dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/jewels" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#F7009688">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2.5dp"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Silver"
+                                android:textSize="36dp"
+                                android:fontFamily="@font/roboto_medium"
+                                android:textColor="#FFFFFF"
+                                android:layout_marginTop="11dp"
+                                android:layout_marginStart="21dp"/>
+
+                        </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
@@ -577,7 +819,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#F7FF5722">
+                    android:background="#F7DA4238">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -667,6 +909,9 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+
+
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/copperCard"
                 android:layout_width="match_parent"
@@ -687,9 +932,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/trees" />
+                        android:src="@drawable/gear" />
 
                 </RelativeLayout>
+
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"

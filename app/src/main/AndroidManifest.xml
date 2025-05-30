@@ -15,10 +15,44 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Catalyst"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.market.goldmeter.MainActivity"></activity>
-        <activity android:name="com.market.goldmeter.PreviousDayPricesActivity" />
+        <receiver
+            android:name=".USDWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/u_s_d_widget_info" />
+        </receiver>
+        <receiver
+            android:name=".SilverWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/silver_widget_info" />
+        </receiver>
+        <receiver
+            android:name=".Gold22Widget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/gold22_widget_info" />
+        </receiver>
+
+        <activity android:name=".MainActivity" />
+        <activity android:name=".PreviousDayPricesActivity" />
         <activity
-            android:name="com.market.goldmeter.SplashScreenActivity"
+            android:name=".SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,0 +1,127 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.Catalyst.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/rounded"
+    android:theme="@style/Theme.Catalyst.AppWidgetContainer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:fontFamily="@font/roboto_thin"
+                android:layout_marginStart="-1dp"
+                android:layout_marginTop="-5dp"
+                android:text="Silver"
+                android:textStyle="bold"
+                android:textColor="#FFEB3B"
+                android:textSize="25dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_thin"
+                android:layout_marginTop="-20dp"
+                android:text="________________"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:textColor="#FFEB3B"
+                android:textSize="21dp"/>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-1dp"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/roboto"
+                android:text="1 gm :"
+                android:textColor="#FFEB3B"
+                android:textSize="21dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/sil_1gm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-1dp"
+                android:layout_marginTop="1dp"
+                android:text="......."
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:textSize="21dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 Kg :"
+                android:fontFamily="@font/roboto"
+                android:textColor="#FFEB3B"
+                android:layout_marginStart="-1dp"
+                android:textSize="21dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/sil_1"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginStart="-1dp"
+                android:layout_marginTop="-1.5dp"
+                android:maxLines="1"
+                android:text="......."
+                android:textColor="#FFFFFF"
+                android:textSize="21dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
