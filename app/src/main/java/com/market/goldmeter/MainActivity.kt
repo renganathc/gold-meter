@@ -159,11 +159,11 @@ class MainActivity : AppCompatActivity() {
 // USD TO INR
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val doc = Jsoup.connect("https://www.xe.com/currencyconverter/convert/?Amount=1&From=USD&To=INR").get()
-                val element = doc.getElementsByClass("sc-708e65be-1 chuBHG")
+                val doc = Jsoup.connect("https://www.bookmyforex.com/currency-converter/usd-to-inr/").get()
+                val element = doc.select(".first_usdorinr_input_inr")
 
                 withContext(Dispatchers.Main) {
-                    binding.dollar1.text = "₹ ${element.text().substring(0,5)}"
+                    binding.dollar1.text = "${element.text()}"
                     binding.lastUpdate.text = "Last Updated : $formattedDate"
                 }
             } catch (_: IOException) {}
